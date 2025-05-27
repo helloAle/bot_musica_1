@@ -43,11 +43,3 @@ adicionar nas variaveis de ambiente (path) o caminho da ./bin
 #### créditos:
 _houveram mudanças na estrutura, e codigo, mas este video serviu de base_
 https://www.youtube.com/watch?v=f8AyaXH_8A4&list=PL9-YiBpH1Ne7NJlG9wGsEee24koLc8JTT&index=4
-
-
-#    _____                                            .___
-#   / ___ \  _________________  ________    ____    __| _/
-#  / / ._\ \/  ___/\___   /\  \/  /\__  \  /    \  / __ | 
-# <  \_____/\___ \  /    /  >    <  / __ \|   |  \/ /_/ | 
-#  \_____\ /____  >/_____ \/__/\_ \(____  /___|  /\____ | 
-#               \/       \/      \/     \/     \/      \/ 
