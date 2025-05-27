@@ -28,6 +28,8 @@
 
 └── squarecloud.app
 
+![alt text](image.png)
+
 ### Sobre o arquivo .env
 
 você deve colar o token e o id do seu bot
