@@ -40,6 +40,6 @@ em requirements.txt temos as dependencias a serem instaladas, a ultima, ffmpeg, 
 
 adicionar nas variaveis de ambiente (path) o caminho da ./bin
 
-#créditos:
+#### créditos:
 
-https://www.youtube.com/@DuneDiscord?sub_confirmation=1
+`https://www.youtube.com/@DuneDiscord?sub_confirmation=1`
