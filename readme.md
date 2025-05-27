@@ -1,6 +1,6 @@
 ## BOT DE MUSICA (para discord)
 
-# estrutura do projeto:
+### estrutura do projeto:
 
 📁 BOT
 
@@ -28,11 +28,11 @@
 
 └── squarecloud.app
 
-# Sobre o arquivo .env
+### Sobre o arquivo .env
 
 você deve colar o token e o id do seu bot
 
-# Sobre a pasta ffmpeg (windows)
+### Sobre a pasta ffmpeg (windows)
 
 em requirements.txt temos as dependencias a serem instaladas, a ultima, ffmpeg, voce também deve instalar em https://ffmpeg.org/  -> Windows builds from gyan.dev  ->  ffmpeg-git-full.7z
 
