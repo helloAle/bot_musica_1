@@ -1,6 +1,6 @@
-##BOT DE MUSICA (para discord)
+## BOT DE MUSICA (para discord)
 
-#estrutura do projeto:
+# estrutura do projeto:
 
 📁 BOT
 
