@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from youtube_dl import YoutubeDL
+from yt_dlp import YoutubeDL
 
 
 class TutorialButton(discord.ui.View):
@@ -23,34 +23,66 @@ class music(commands.Cog):
 
         # 2d array containing [song, channel]
         self.music_queue = []
-        self.YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True'}
-        self.FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+        self.YDL_OPTIONS = {
+            'format': 'bestaudio/best',
+            'noplaylist': 'True',
+            'quiet': True,
+            'default_search': 'ytsearch',
+            'extract_flat': False
+            }
+        self.FFMPEG_OPTIONS = {
+            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+            'options': '-vn -loglevel panic'
+        }
+
 
         self.vc = ""
 
      #searching the item on youtube
     def search_yt(self, item):
         with YoutubeDL(self.YDL_OPTIONS) as ydl:
-            try: 
-                info = ydl.extract_info("ytsearch:%s" % item, download=False)['entries'][0]
-            except Exception: 
+            try:
+                if "youtube.com/watch?" in item or "youtu.be/" in item:
+                    info = ydl.extract_info(item, download=False)
+                else:
+                    results = ydl.extract_info(f"ytsearch:{item}", download=False)
+                    if not results or 'entries' not in results or len(results['entries']) == 0:
+                        return False
+                    info = results['entries'][0]
+
+                if 'formats' not in info or not info['formats']:
+                    print("Nenhum formato disponível.")
+                    return False
+
+                # Pega o melhor áudio disponível
+                audio_format = next((f for f in info['formats'] if f.get('acodec') != 'none'), None)
+                if not audio_format:
+                    return False
+
+                return {
+                    'source': audio_format['url'],
+                    'title': info.get('title', 'Título desconhecido')
+                }
+
+            except Exception as e:
+                print(f"Erro ao buscar no YouTube: {e}")
                 return False
 
-        return {'source': info['formats'][0]['url'], 'title': info['title']}
+
 
     def play_next(self):
         if len(self.music_queue) > 0:
             self.is_playing = True
-
-            #get the first url
             m_url = self.music_queue[0][0]['source']
-
-            #remove the first element as you are currently playing it
             self.music_queue.pop(0)
-
-            self.vc.play(discord.FFmpegPCMAudio(m_url, **self.FFMPEG_OPTIONS), after=lambda e: self.play_next())
+            try:
+                self.vc.play(discord.FFmpegPCMAudio(m_url, **self.FFMPEG_OPTIONS), after=lambda e: self.play_next())
+            except Exception as e:
+                print(f"Erro ao tocar a música: {e}")
+                self.is_playing = False
         else:
             self.is_playing = False
+
 
     # infinite loop checking 
     async def play_music(self):
@@ -139,8 +171,9 @@ class music(commands.Cog):
         print(retval)
         if retval != "":
             embedvc = discord.Embed(
+                title="Fila de músicas 🎶",
                 colour= 12255232,
-                description = f"{retval}"
+                description=retval
             )
             await interaction.followup.send(embed=embedvc)
         else:
@@ -154,7 +187,7 @@ class music(commands.Cog):
     @app_commands.default_permissions(manage_channels=True)
     async def pular(self, interaction:discord.Interaction):
         await interaction.response.defer(thinking=True)
-        if self.vc != "" and self.vc:
+        if not self.vc or not self.vc.is_connected():
             self.vc.stop()
             #try to play next in the queue if it exists
             await self.play_music()
