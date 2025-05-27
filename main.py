@@ -19,9 +19,6 @@ class SubButton(discord.ui.View):
         self.value = None
         self.timeout=600
 
-        # botaourl = discord.ui.Button(label="Inscreva-se no Canal!",url="https://www.youtube.com/@DuneDiscord?sub_confirmation=1")
-        # self.add_item(botaourl)
-
 @bot.event
 async def on_ready(): 
     print("Estou online!")
@@ -47,3 +44,10 @@ async def main():
 
 asyncio.run(main())
 
+
+#    _____                                            .___
+#   / ___ \  _________________  ________    ____    __| _/
+#  / / ._\ \/  ___/\___   /\  \/  /\__  \  /    \  / __ | 
+# <  \_____/\___ \  /    /  >    <  / __ \|   |  \/ /_/ | 
+#  \_____\ /____  >/_____ \/__/\_ \(____  /___|  /\____ | 
+#               \/       \/      \/     \/     \/      \/ 
